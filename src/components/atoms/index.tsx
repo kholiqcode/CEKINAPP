@@ -1,2 +1,3 @@
 import Gap from './Gap';
-export { Gap };
+import Input from './Input';
+export { Gap, Input };

@@ -27,7 +27,7 @@ type Style = {
 };
 
 const styles = StyleSheet.create<Style>({
-  container: { flexDirection: 'row' },
+  container: { flexDirection: 'row', alignItems: 'center' },
   logo: { width: 50, height: 50 },
   title: {
     ...FONT_BOLD(20),

@@ -1,4 +1,13 @@
-import { BLACK, GRAY_MEDIUM, GREEN_DARK, PRIMARY, RED, SECONDARY, WHITE } from '../palette';
+import {
+  BLACK,
+  GRAY_MEDIUM,
+  GREEN_DARK,
+  PRIMARY,
+  RED,
+  SECONDARY,
+  WARNING,
+  WHITE,
+} from '../palette';
 
 /**
  * Roles for colors.  Prefer using these over the palette.  It makes it easier
@@ -44,6 +53,15 @@ export const color = {
    * Error messages and icons.
    */
   error: RED,
+  /**
+   * Warning Information.
+   */
+  warning: WARNING,
+
+  /**
+   * WHite COlor.
+   */
+  white: WHITE,
 
   /**
    * Storybook background for Text stories, or any stories where
