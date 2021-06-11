@@ -1,3 +1,5 @@
 import Dashboard from './Dashboard';
 import Splash from './Splash';
-export { Splash, Dashboard };
+import SignIn from './SignIn';
+export { Splash, Dashboard, SignIn };
+export * from './Main';

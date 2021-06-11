@@ -1,2 +1,3 @@
 import BoxContainer from './BoxContainer';
-export { BoxContainer };
+import MainContainer from './MainContainer';
+export { BoxContainer, MainContainer };

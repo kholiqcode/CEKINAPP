@@ -1,13 +1,14 @@
 import React from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { ILLogo } from '../../assets';
 import { BoxContainer, Gap, Header, Input } from '../../components';
 import { color, FONT_BOLD, FONT_MEDIUM, FONT_REGULAR } from '../../theme';
 
 const Dashboard = () => {
   return (
     <BoxContainer>
-      <Header style={styles.header} />
+      <Header title="CEK-IN" logo={ILLogo} subTitle="COVID ELECTRONIC INFORMATION" style={styles.header} />
       <ScrollView style={{ paddingHorizontal: 10 }}>
         <Gap height={20} />
         <Input placeholder="Masukkan lokasi anda" iconLeft="search" returnKeyType="search" />
@@ -15,7 +16,7 @@ const Dashboard = () => {
         <View style={styles.sectionLogin}>
           <Icon name="user-circle" size={24} color="#525252" />
           <Gap width={10} />
-          <View style={{ flexDirection: 'row',justifyContent:'center' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Text style={{ ...FONT_REGULAR(14) }}>Sudah Punya Akun?</Text>
             <Gap width={5} />
             <TouchableOpacity>

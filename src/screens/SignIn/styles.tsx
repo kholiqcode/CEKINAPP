@@ -17,7 +17,6 @@ const styles = StyleSheet.create<Style>({
     color: BLACK,
     marginTop: 12,
     ...FONT_BOLD(30),
-    textAlign:'center'
   },
   textAppDesc: {
     color: BLACK,
@@ -25,8 +24,8 @@ const styles = StyleSheet.create<Style>({
     ...FONT_REGULAR(16),
   },
   imageAppLogo: {
-    width: 150,
-    height: 150,
+    width: 200,
+    height: 200,
   },
 });
 

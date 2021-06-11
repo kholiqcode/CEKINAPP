@@ -10,17 +10,30 @@ const Input: React.FC<StyleProp<any>> = ({
   returnKeyType,
   iconRight,
   iconLeft,
+  secureTextEntry,
+  onPressIcon,
+  keyboardType='default',
 }) => {
   const iconStyle = iconRight ? 'row-reverse' : 'row';
   return (
     <View style={styles.container(iconStyle)}>
-      {(iconRight || iconLeft) && <Icon name={iconRight ?? iconLeft} size={20} color="#525252" />}
+      {(iconRight || iconLeft) && (
+        <Icon.Button
+          onPress={onPressIcon}
+          name={iconRight ?? iconLeft}
+          size={20}
+          style={{ backgroundColor: '#F4F4F4',alignSelf:'center'}}
+          color="#525252"
+        />
+      )}
       {(iconRight || iconLeft) && <Gap width={10} />}
       <TextInput
         style={{ ...styles.input, ...style }}
         placeholder={placeholder}
         placeholderTextColor={color.dim}
         returnKeyType={returnKeyType}
+        secureTextEntry={secureTextEntry}
+        keyboardType={keyboardType}
       />
     </View>
   );
