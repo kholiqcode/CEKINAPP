@@ -12,7 +12,7 @@ import { Gap, Input, MainContainer, Button, CardHospital } from '../../component
 import { color, FONT_BOLD, FONT_MEDIUM, FONT_REGULAR } from '../../theme';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const Headlines = () => {
+const RumahSakit = () => {
   return (
     <MainContainer>
       <View
@@ -44,15 +44,15 @@ const Headlines = () => {
           />
         </ImageBackground>
         <View style={{ paddingHorizontal: 10, flex: 1 }}>
-          <CardHospital/>
-          <CardHospital/>
-          <CardHospital/>
+          <CardHospital />
+          <CardHospital />
+          <CardHospital />
         </View>
       </View>
     </MainContainer>
   );
 };
 
-export default Headlines;
+export default RumahSakit;
 
 const styles = StyleSheet.create({});

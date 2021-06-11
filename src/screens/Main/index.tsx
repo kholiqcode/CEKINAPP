@@ -1,6 +1,6 @@
 import Account from './Account';
 import Home from './Home';
-import Headlines from './Headlines';
-import Hotline from './Hotline';
+import RumahSakit from './RumahSakit';
+import Assessment from './Assessment';
 
-export { Account, Home, Headlines, Hotline };
+export { Account, Home, RumahSakit, Assessment };

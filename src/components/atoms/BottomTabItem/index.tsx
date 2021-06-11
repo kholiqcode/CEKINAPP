@@ -10,41 +10,41 @@ const BottomTabItem: React.FC<{ title: any; active: any; onPress: any; onLongPre
   onLongPress,
 }) => {
   const IconItem = () => {
-    if (title === 'Headlines') {
+    if (title === 'Rumah Sakit') {
       return active ? (
         <Icon
-          name="newspaper"
+          name="hospital"
           size={24}
-          style={{  alignSelf: 'center' }}
+          style={{ alignSelf: 'center' }}
           color="#0BCAD4"
         />
       ) : (
         <Icon
-          name="newspaper"
+          name="hospital"
           size={24}
-          style={{  alignSelf: 'center' }}
+          style={{ alignSelf: 'center' }}
           color={color.white}
         />
       );
     }
-    if (title === 'Hotline') {
+    if (title === 'Assessment') {
       return active ? (
         <Icon
-          name="phone-volume"
+          name="clipboard-list"
           size={24}
-          style={{  alignSelf: 'center' }}
+          style={{ alignSelf: 'center' }}
           color="#0BCAD4"
         />
       ) : (
         <Icon
-          name="phone-volume"
+          name="clipboard-list"
           size={24}
-          style={{  alignSelf: 'center' }}
+          style={{ alignSelf: 'center' }}
           color={color.white}
         />
       );
     }
-    if (title === 'Account') {
+    if (title === 'Akun') {
       return active ? (
         <Icon
           name="user"

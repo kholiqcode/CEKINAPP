@@ -1,6 +1,14 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { Account, Dashboard, Headlines, Home, Hotline, SignIn, Splash } from '../screens';
+import {
+  Account,
+  Dashboard,
+  RumahSakit,
+  Home,
+  Assessment,
+  SignIn,
+  Splash,
+} from '../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabNavigator } from '../components';
 
@@ -26,25 +34,25 @@ const Tab = createBottomTabNavigator();
 
 const TabRoutes = [
   {
-    name: 'Home',
+    name: 'Beranda',
     component: Home,
   },
   {
-    name: 'Headlines',
-    component: Headlines,
+    name: 'Rumah Sakit',
+    component: RumahSakit,
   },
   {
-    name: 'Hotline',
-    component: Hotline,
+    name: 'Assessment',
+    component: Assessment,
   },
   {
-    name: 'Account',
+    name: 'Akun',
     component: Account,
   },
 ];
 
 const MainScreen = () => (
-  <Tab.Navigator initialRouteName="Headlines" tabBar={(props) => <BottomTabNavigator {...props} />}>
+  <Tab.Navigator tabBar={(props) => <BottomTabNavigator {...props} />}>
     {TabRoutes.map((route: any, index: any) => (
       <Tab.Screen key={index} {...route} />
     ))}
@@ -52,7 +60,7 @@ const MainScreen = () => (
 );
 
 const Router = () => (
-  <Stack.Navigator initialRouteName="MainScreen">
+  <Stack.Navigator initialRouteName="SignIn">
     <Stack.Screen
       name="Splash"
       component={Splash}
@@ -79,6 +87,7 @@ const Router = () => (
       component={MainScreen}
       options={{
         headerShown: false,
+        cardStyleInterpolator: forFade,
       }}
     />
   </Stack.Navigator>

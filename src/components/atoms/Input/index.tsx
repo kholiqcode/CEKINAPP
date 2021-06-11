@@ -13,16 +13,28 @@ const Input: React.FC<StyleProp<any>> = ({
   secureTextEntry,
   onPressIcon,
   keyboardType='default',
+  button
 }) => {
   const iconStyle = iconRight ? 'row-reverse' : 'row';
   return (
     <View style={styles.container(iconStyle)}>
-      {(iconRight || iconLeft) && (
+      {iconRight || (iconLeft && button) ? (
         <Icon.Button
           onPress={onPressIcon}
           name={iconRight ?? iconLeft}
           size={20}
-          style={{ backgroundColor: '#F4F4F4',alignSelf:'center'}}
+          style={{
+            backgroundColor: '#F4F4F4',
+            alignSelf: 'center',
+          }}
+          color="#525252"
+        />
+      ) : (
+        <Icon
+          onPress={onPressIcon}
+          name={iconRight ?? iconLeft}
+          size={20}
+          style={{ backgroundColor: '#F4F4F4', alignSelf: 'center' }}
           color="#525252"
         />
       )}
