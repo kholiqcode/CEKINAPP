@@ -3,7 +3,7 @@ const activeConfig = 'dev';
 const constants = {
   dev: {
     url: {
-      api: 'http://192.168.1.4:8000/api',
+      api: 'http://192.168.100.15:8000/api',
       assets: '',
       origin: '',
     },

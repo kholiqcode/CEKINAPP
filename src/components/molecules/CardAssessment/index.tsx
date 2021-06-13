@@ -8,7 +8,7 @@ import RadioForm, {
 } from 'react-native-simple-radio-button';
 import { useState } from 'react';
 
-const CardAssessment = () => {
+const CardAssessment:React.FC<any> = ({question}) => {
   const [value, setValue] = useState(0);
   var radio_props = [
     { label: 'Ya', value: 0 },
