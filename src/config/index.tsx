@@ -3,13 +3,14 @@ import constant from './constant';
 import { default as baseUrl, default as url } from './url';
 
 interface API {
-  customer?: Object;
+  base?: any;
 }
 
 const API: API = {};
 // Customer
-API.customer = {
-  login: ApiRequest.post(baseUrl?.customer?.login),
+API.base = {
+  getVaccination: ApiRequest.get(baseUrl?.vaccination),
+  getHospitals: ApiRequest.get(baseUrl?.hospitals),
 };
 
 export { API, constant, url };

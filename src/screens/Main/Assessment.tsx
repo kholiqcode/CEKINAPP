@@ -16,7 +16,6 @@ import {
 } from '../../components';
 import { color, FONT_BOLD, FONT_MEDIUM, FONT_REGULAR } from '../../theme';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { Button as ButtonPaper } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 
 const Assessment = () => {

@@ -8,6 +8,7 @@ import {
   Assessment,
   SignIn,
   Splash,
+  Search,
 } from '../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabNavigator } from '../components';
@@ -17,6 +18,7 @@ export type ScreenParamList = {
   Dashboard: undefined;
   SignIn: undefined;
   MainScreen: undefined;
+  Search: undefined;
 };
 const Stack = createStackNavigator<ScreenParamList>();
 
@@ -60,7 +62,7 @@ const MainScreen = () => (
 );
 
 const Router = () => (
-  <Stack.Navigator initialRouteName="SignIn">
+  <Stack.Navigator initialRouteName="MainScreen">
     <Stack.Screen
       name="Splash"
       component={Splash}
@@ -85,6 +87,14 @@ const Router = () => (
     <Stack.Screen
       name="MainScreen"
       component={MainScreen}
+      options={{
+        headerShown: false,
+        cardStyleInterpolator: forFade,
+      }}
+    />
+    <Stack.Screen
+      name="Search"
+      component={Search}
       options={{
         headerShown: false,
         cardStyleInterpolator: forFade,

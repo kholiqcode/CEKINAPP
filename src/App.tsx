@@ -3,8 +3,10 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import Toast from 'react-native-toast-message';
 import Router from './routes';
+import { Provider } from 'react-redux';
+import { store } from './libs';
 
-const App = () => {
+const MainApp = () => {
   return (
     <NavigationContainer>
       <StatusBar showHideTransition="slide" barStyle="light-content" />
@@ -14,4 +16,10 @@ const App = () => {
   );
 };
 
+const App = () => (
+  <Provider store={store}>
+    <MainApp />
+  </Provider>
+);
 export default App;
+

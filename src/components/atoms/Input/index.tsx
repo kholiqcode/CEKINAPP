@@ -12,8 +12,13 @@ const Input: React.FC<StyleProp<any>> = ({
   iconLeft,
   secureTextEntry,
   onPressIcon,
-  keyboardType='default',
-  button
+  keyboardType = 'default',
+  button,
+  onFocus,
+  onBlur,
+  autoFocusKeyboard,
+  forwardedRef,
+  onChangeText,
 }) => {
   const iconStyle = iconRight ? 'row-reverse' : 'row';
   return (
@@ -46,6 +51,11 @@ const Input: React.FC<StyleProp<any>> = ({
         returnKeyType={returnKeyType}
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        ref={forwardedRef}
+        autoFocus={autoFocusKeyboard}
+        onChangeText={onChangeText}
       />
     </View>
   );

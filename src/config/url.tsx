@@ -3,14 +3,14 @@ import appConfig from './constant';
 export const config = appConfig;
 
 interface BaseUrl {
-  customer?: any;
+  vaccination?: any;
+  hospitals?: any;
   auth?: any;
 }
 
 const baseUrl: BaseUrl = {
-  customer: {
-    login: `${config.url.api}/customer/login`,
-  },
+  vaccination: `${config.url.api}/vaccination/current`,
+  hospitals: `${config.url.api}/hospitals/list`,
   auth: {
     refresh: `${config.url.api}/auth/refresh`,
   },
