@@ -1,28 +1,21 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import {  ILLogo } from '../../assets';
+import { ILLogo } from '../../assets';
 import CheckBox from '@react-native-community/checkbox';
-import {
-  BoxContainer,
-  Button,
-  Gap,
-  Header,
-} from '../../components';
-import {
-  color,
-  FONT_LIGHT,
-  FONT_MEDIUM,
-  FONT_REGULAR,
-} from '../../theme';
+import { BoxContainer, Button, Gap, Header } from '../../components';
+import { color, FONT_LIGHT, FONT_MEDIUM, FONT_REGULAR } from '../../theme';
 import { TextInput } from 'react-native-gesture-handler';
 import RadioForm, {
   RadioButton,
   RadioButtonInput,
   RadioButtonLabel,
 } from 'react-native-simple-radio-button';
+import { postSelfAssessment } from '../../services/assessment';
+import { useEffect } from 'react';
+import { RootStateOrAny, useSelector } from 'react-redux';
 
-const SelfAssessment = () => {
+const SelfAssessment = ({navigation}) => {
   const [fever, setFever] = useState(false);
   const [cough, setCough] = useState(false);
   const [headache, setHeadache] = useState(false);
@@ -40,6 +33,9 @@ const SelfAssessment = () => {
   const [cancer, setCancer] = useState(false);
   const [diabetes, setDiabetes] = useState(false);
   const [hypertension, setHypertension] = useState(false);
+  const { isLoading } = useSelector(
+    (state: RootStateOrAny) => state.globalReducer,
+  );
   var radio_props = [
     { label: 'Ya', value: 1 },
     { label: 'Tidak', value: 0 },
@@ -66,15 +62,50 @@ const SelfAssessment = () => {
       value: 'd',
     },
   ];
+  
+
+  const _handleAssessment = () => {
+    postSelfAssessment({
+      fever,
+      cough,
+      headache,
+      contactWithSuspected: contactWithSuspected == 1 ? true : false,
+      duration,
+      medicine,
+      temperature,
+      age,
+      dyspnea,
+      myalgia,
+      sputum,
+      immunocompromised,
+      chronicRespiratory,
+      cvd,
+      cancer,
+      diabetes,
+      hypertension,
+      location: {},
+    });
+    
+  };
+
+  useEffect(() => {
+    if (!isLoading) {
+      navigation.navigate('ResultAssessment');
+    }
+  }, [isLoading]);
+
   return (
     <BoxContainer>
       <View style={styles.container}>
-        <Header
-          title="CEK-IN"
-          logo={ILLogo}
-          subTitle="COVID ELECTRONIC INFORMATION"
-          style={styles.header}
-        />
+        <View style={{ flexDirection: 'row',alignItems:'center'}}>
+          <Header
+            title="CEK-IN"
+            logo={ILLogo}
+            subTitle="COVID ELECTRONIC INFORMATION"
+            style={styles.header}
+            back
+          />
+        </View>
         <View style={{ flex: 1, paddingTop: 10 }}>
           <Text style={{ ...FONT_MEDIUM(24), textAlign: 'center' }}>
             Self Assesment
@@ -381,7 +412,13 @@ const SelfAssessment = () => {
               </View>
             </View>
             <Gap height={10} />
-            <Button>Kirim</Button>
+            <Button onPress={_handleAssessment}>
+              {isLoading ? (
+                <ActivityIndicator size="large" color={color.white} />
+              ) : (
+                'Kirim'
+              )}
+            </Button>
             <Gap height={20} />
           </ScrollView>
         </View>
