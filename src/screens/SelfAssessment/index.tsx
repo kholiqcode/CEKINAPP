@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ILLogo } from '../../assets';
@@ -85,14 +85,13 @@ const SelfAssessment = ({navigation}) => {
       hypertension,
       location: {},
     });
-    
+    setTimeout(()=>{
+      if (!isLoading) {
+        navigation.navigate('ResultAssessment');
+      }
+    },1500)
   };
 
-  useEffect(() => {
-    if (!isLoading) {
-      navigation.navigate('ResultAssessment');
-    }
-  }, [isLoading]);
 
   return (
     <BoxContainer>
@@ -100,10 +99,10 @@ const SelfAssessment = ({navigation}) => {
         <View style={{ flexDirection: 'row',alignItems:'center'}}>
           <Header
             title="CEK-IN"
-            logo={ILLogo}
             subTitle="COVID ELECTRONIC INFORMATION"
             style={styles.header}
             back
+            onPress={() => navigation.goBack()}
           />
         </View>
         <View style={{ flex: 1, paddingTop: 10 }}>

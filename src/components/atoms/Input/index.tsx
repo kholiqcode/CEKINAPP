@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleProp, StyleSheet, TextInput, View } from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { color, FONT_MEDIUM } from '../../../theme';
 import Gap from '../Gap';
@@ -11,7 +17,7 @@ const Input: React.FC<StyleProp<any>> = ({
   iconRight,
   iconLeft,
   secureTextEntry,
-  onPressIcon,
+  onPress,
   keyboardType = 'default',
   button,
   onFocus,
@@ -19,24 +25,26 @@ const Input: React.FC<StyleProp<any>> = ({
   autoFocusKeyboard,
   forwardedRef,
   onChangeText,
+  disable,
 }) => {
   const iconStyle = iconRight ? 'row-reverse' : 'row';
   return (
     <View style={styles.container(iconStyle)}>
       {iconRight || (iconLeft && button) ? (
-        <Icon.Button
-          onPress={onPressIcon}
-          name={iconRight ?? iconLeft}
-          size={20}
-          style={{
-            backgroundColor: '#F4F4F4',
-            alignSelf: 'center',
-          }}
-          color="#525252"
-        />
+        <TouchableOpacity onPress={onPress}>
+          <Icon
+            name={iconRight ?? iconLeft}
+            size={20}
+            style={{
+              backgroundColor: '#F4F4F4',
+              alignSelf: 'center',
+              borderRadius: 0,
+            }}
+            color="#525252"
+          />
+        </TouchableOpacity>
       ) : (
         <Icon
-          onPress={onPressIcon}
           name={iconRight ?? iconLeft}
           size={20}
           style={{ backgroundColor: '#F4F4F4', alignSelf: 'center' }}
@@ -56,6 +64,8 @@ const Input: React.FC<StyleProp<any>> = ({
         ref={forwardedRef}
         autoFocus={autoFocusKeyboard}
         onChangeText={onChangeText}
+        editable={!disable}
+        selectTextOnFocus={!disable}
       />
     </View>
   );

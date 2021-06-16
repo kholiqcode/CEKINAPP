@@ -12,6 +12,8 @@ API.base = {
   getVaccination: ApiRequest.get(baseUrl?.vaccination),
   getHospitals: ApiRequest.get(baseUrl?.hospitals),
   postAssessment: ApiRequest.post(baseUrl?.assessment),
+  postRegister: ApiRequest.post(baseUrl?.auth?.register),
+  postLogin: ApiRequest.post(baseUrl?.auth?.login),
 };
 
 export { API, constant, url };

@@ -4,5 +4,14 @@ import SignIn from './SignIn';
 import Search from './Search';
 import SelfAssessment from './SelfAssessment';
 import ResultAssessment from './ResultAssessment';
-export { Splash, Dashboard, SignIn, Search, SelfAssessment, ResultAssessment };
+import SignUp from './SignUp';
+export {
+  Splash,
+  Dashboard,
+  SignIn,
+  Search,
+  SelfAssessment,
+  ResultAssessment,
+  SignUp,
+};
 export * from './Main';

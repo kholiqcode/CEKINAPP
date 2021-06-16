@@ -1,4 +1,7 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import React from 'react';
 import {
   Account,
@@ -11,6 +14,7 @@ import {
   Search,
   SelfAssessment,
   ResultAssessment,
+  SignUp,
 } from '../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabNavigator } from '../components';
@@ -23,6 +27,7 @@ export type ScreenParamList = {
   Search: undefined;
   SelfAssessment: undefined;
   ResultAssessment: undefined;
+  SignUp: undefined;
 };
 const Stack = createStackNavigator<ScreenParamList>();
 
@@ -66,7 +71,7 @@ const MainScreen = () => (
 );
 
 const Router = () => (
-  <Stack.Navigator initialRouteName="Dashboard">
+  <Stack.Navigator initialRouteName="SignUp">
     <Stack.Screen
       name="Splash"
       component={Splash}
@@ -86,6 +91,8 @@ const Router = () => (
       component={SignIn}
       options={{
         headerShown: false,
+        cardStyleInterpolator:
+          CardStyleInterpolators.forRevealFromBottomAndroid,
       }}
     />
     <Stack.Screen
@@ -115,6 +122,14 @@ const Router = () => (
     <Stack.Screen
       name="ResultAssessment"
       component={ResultAssessment}
+      options={{
+        headerShown: false,
+        cardStyleInterpolator: forFade,
+      }}
+    />
+    <Stack.Screen
+      name="SignUp"
+      component={SignUp}
       options={{
         headerShown: false,
         cardStyleInterpolator: forFade,

@@ -29,24 +29,12 @@ const SignIn = () => {
           iconRight={showPassword ? 'eye' : 'eye-slash'}
           returnKeyType="done"
           placeholder="Password"
-          onPressIcon={() => tooglePassword()}
+          onPress={() => tooglePassword()}
         />
         <Gap height={40} />
         <Button onPress={() => navigation.replace('MainScreen')}>Login</Button>
         <Gap height={40} />
-        <TouchableOpacity>
-          <Text
-            style={{
-              color: color.primary,
-              ...FONT_MEDIUM(16),
-              textAlign: 'right',
-            }}
-          >
-            Lupa Password
-          </Text>
-        </TouchableOpacity>
-        <Gap height={40} />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text
             style={{
               color: color.primary,

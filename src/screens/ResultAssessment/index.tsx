@@ -7,7 +7,7 @@ import { ILLogo } from '../../assets';
 import { BoxContainer, Gap, Header, Button } from '../../components';
 import { color, FONT_MEDIUM, FONT_REGULAR } from '../../theme';
 
-const ResultAssessment = () => {
+const ResultAssessment: React.FC<any> = ({ navigation }) => {
   const { assessment } = useSelector(
     (state: RootStateOrAny) => state.assessmentReducer,
   );
@@ -16,9 +16,10 @@ const ResultAssessment = () => {
       <View style={{ flex: 1, paddingHorizontal: 10 }}>
         <Header
           title="CEK-IN"
-          logo={ILLogo}
           subTitle="COVID ELECTRONIC INFORMATION"
           style={{ paddingHorizontal: 10, paddingTop: 15 }}
+          back
+          onPress={() => navigation.goBack()}
         />
         <Gap height={20} />
       </View>
@@ -102,11 +103,18 @@ const ResultAssessment = () => {
           </View>
         </View>
         <Gap height={20} />
-        <Button>Karantina Mandiri</Button>
-        <Gap height={10} />
-        <Text style={{ ...FONT_REGULAR(12), color: 'red' }}>
-          ** Masuk untuk melakukan melakukan karantina mandiri selama 14 hari.
-        </Text>
+        {assessment?.score > 5 ? (
+          <View>
+            <Button onPress={() => navigation.navigate('SignIn')}>Isolasi Mandiri</Button>
+            <Gap height={10} />
+            <Text style={{ ...FONT_REGULAR(12), color: 'red' }}>
+              ** Masuk untuk melakukan melakukan karantina mandiri selama 14
+              hari.
+            </Text>
+          </View>
+        ) : (
+          <Button>Beranda</Button>
+        )}
       </ScrollView>
     </BoxContainer>
   );

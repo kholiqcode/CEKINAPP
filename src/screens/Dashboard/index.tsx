@@ -14,11 +14,20 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { ILLogo } from '../../assets';
-import { BoxContainer, Gap, Header, Input } from '../../components';
+import { BoxContainer, Gap, Header, Input, Button } from '../../components';
 import { getVaccination } from '../../services';
-import { color, FONT_BOLD, FONT_MEDIUM, FONT_REGULAR } from '../../theme';
+import {
+  boxShadow,
+  color,
+  FONT_BOLD,
+  FONT_MEDIUM,
+  FONT_REGULAR,
+} from '../../theme';
 
-const Dashboard: React.FC<{ route: any,navigation:any }> = ({ route,navigation }) => {
+const Dashboard: React.FC<{ route: any; navigation: any }> = ({
+  route,
+  navigation,
+}) => {
   const { vaccination } = useSelector(
     (state: RootStateOrAny) => state.vaccinationReducer,
   );
@@ -40,8 +49,6 @@ const Dashboard: React.FC<{ route: any,navigation:any }> = ({ route,navigation }
       setStats(route?.params);
     }
   }, [vaccination, route?.params]);
-
-  
 
   return (
     <BoxContainer>
@@ -66,7 +73,7 @@ const Dashboard: React.FC<{ route: any,navigation:any }> = ({ route,navigation }
           <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Text style={{ ...FONT_REGULAR(14) }}>Sudah Punya Akun?</Text>
             <Gap width={5} />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
               <Text style={{ ...FONT_BOLD(14) }}>Login Sekarang</Text>
             </TouchableOpacity>
           </View>
@@ -133,7 +140,9 @@ const Dashboard: React.FC<{ route: any,navigation:any }> = ({ route,navigation }
             </View>
             <View style={styles.cardStatusCovid}>
               <Text style={{ ...FONT_MEDIUM(14), color: color.white }}>
-                {new Intl.NumberFormat('de-DE').format(stats?.numbers?.fatal ?? 0)}
+                {new Intl.NumberFormat('de-DE').format(
+                  stats?.numbers?.fatal ?? 0,
+                )}
               </Text>
               <Text style={{ ...FONT_MEDIUM(14), color: color.white }}>
                 Meninggal
@@ -271,6 +280,15 @@ const Dashboard: React.FC<{ route: any,navigation:any }> = ({ route,navigation }
             </View>
           </View>
         </View>
+        <Gap height={15} />
+        <Button
+          style={{
+            marginHorizontal: 10,
+          }}
+          onPress={() => navigation.navigate('SelfAssessment')}
+        >
+          Self Assesment Sekarang
+        </Button>
         <Gap height={15} />
       </ScrollView>
     </BoxContainer>
