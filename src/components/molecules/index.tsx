@@ -3,4 +3,12 @@ import BottomTabNavigator from './BottomTabNavigator';
 import CardNews from './CardNews';
 import CardHospital from './CardHospital';
 import CardAssessment from './CardAssessment';
-export { Header, BottomTabNavigator, CardNews, CardHospital, CardAssessment };
+import CardConsultation from './CardConsultation';
+export {
+  Header,
+  BottomTabNavigator,
+  CardNews,
+  CardHospital,
+  CardAssessment,
+  CardConsultation,
+};

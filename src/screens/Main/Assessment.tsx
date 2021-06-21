@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { DummyUser1 } from '../../assets';
+import { DummyUser1, DummyUser2, ILLogo } from '../../assets';
 import {
   Button,
   CardAssessment,
@@ -17,12 +17,46 @@ import {
 import { color, FONT_BOLD, FONT_MEDIUM, FONT_REGULAR } from '../../theme';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { DatePickerModal } from 'react-native-paper-dates';
+import {
+  getAssessmentData,
+  getIsolationInfo,
+  postSelfAssessmentDaily,
+} from '../../services';
+import { RootStateOrAny, useSelector } from 'react-redux';
+import moment from 'moment';
+import { useCallback } from 'react';
 
-const Assessment = () => {
+const Assessment: React.FC<any> = ({ navigation }) => {
+  const { user } = useSelector((state: RootStateOrAny) => state.authReducer);
+  const { assessmentData } = useSelector(
+    (state: RootStateOrAny) => state.assessmentReducer,
+  );
+  const { isolation } = useSelector(
+    (state: RootStateOrAny) => state.isolationReducer,
+  );
   const [range, setRange] = React.useState<{
     startDate: Date | undefined;
     endDate: Date | undefined;
-  }>({ startDate: undefined, endDate: undefined });
+  }>({
+    startDate: new Date(
+      parseInt(moment(isolation?.start_date).format('Y')),
+      parseInt(moment(isolation?.start_date).format('M')),
+      parseInt(moment(isolation?.start_date).format('D')),
+    ),
+    endDate: new Date(
+      parseInt(moment(isolation?.end_date).format('Y')),
+      parseInt(moment(isolation?.end_date).format('M')),
+      parseInt(moment(isolation?.end_date).format('D')),
+    ),
+  });
+  const [outHome, setOutHome] = useState(false);
+  const [fever, setFever] = useState(false);
+  const [pain, setPain] = useState(false);
+  const [breath, setBreath] = useState(false);
+  const [physicalContact, setPhysicalContact] = useState(false);
+  const [daysIsolation, setDaysIsolation] = useState(1);
+  const [assessment, setAssessment] = useState([]);
+  const [now, setNow] = useState(moment().format('Y-MM-DD'));
 
   const [open, setOpen] = React.useState(false);
 
@@ -30,22 +64,71 @@ const Assessment = () => {
     setOpen(false);
   }, [setOpen]);
 
+  const _countDaysIsolation = useCallback(() => {
+    let start = moment([
+      parseInt(moment(isolation?.start_date).format('Y')),
+      parseInt(moment(isolation?.start_date).format('M')),
+      parseInt(moment(isolation?.start_date).format('D')),
+    ]);
+    let end = moment([
+      parseInt(moment(now).format('Y')),
+      parseInt(moment(now).format('M')),
+      parseInt(moment(now).format('D')),
+    ]);
+
+    //Difference in number of days
+    setDaysIsolation(moment.duration(end.diff(start)).asDays());
+  }, [isolation]);
+
   const onConfirm = React.useCallback(
     ({ startDate, endDate }) => {
+      console.log(startDate);
       setOpen(false);
       setRange({ startDate, endDate });
+      setNow(moment(startDate).format('Y-MM-DD'));
     },
     [setOpen, setRange],
   );
+
+  const _handleAssessmentDaily = async () => {
+    const payload = {
+      out_home: outHome,
+      fever,
+      breath,
+      pain,
+      physical_contact: physicalContact,
+    };
+    await postSelfAssessmentDaily(payload);
+    navigation.navigate('ResultAssessment');
+  };
+
+  const _handleGetIsolationInfo = async () => {
+    await getIsolationInfo();
+  };
+  const _handleGetDataAssessment = async () => {
+    await getAssessmentData();
+  };
+
+  useEffect(() => {
+    _handleGetIsolationInfo();
+    _handleGetDataAssessment();
+    _countDaysIsolation();
+  }, []);
+
+  useEffect(() => {
+    _countDaysIsolation();
+  }, [isolation]);
 
   return (
     <MainContainer>
       <View style={styles.container}>
         <Header
-          logo={DummyUser1}
-          title="Andini Novianti"
+          logo={DummyUser2 ?? ILLogo}
+          title={user?.name}
           profile
-          subTitle="Freelancer"
+          subTitle={
+            user?.profession ?? user?.gender == 'L' ? 'Laki-Laki' : 'Perempuan'
+          }
         />
         <View style={{ flex: 1, paddingTop: 10 }}>
           <Text style={{ ...FONT_MEDIUM(24), textAlign: 'center' }}>
@@ -65,10 +148,10 @@ const Assessment = () => {
           >
             <View>
               <Text style={{ ...FONT_REGULAR(14), color: color.white }}>
-                Isolasi Ke - 1
+                Isolasi Ke - {daysIsolation}
               </Text>
               <Text style={{ ...FONT_REGULAR(14), color: color.white }}>
-                24 April 2020
+                {now}
               </Text>
             </View>
             <TouchableOpacity onPress={() => setOpen(true)}>
@@ -82,12 +165,7 @@ const Assessment = () => {
               startDate={range.startDate}
               endDate={range.endDate}
               onConfirm={onConfirm}
-              // validRange={{
-              //   startDate: new Date(2021, 1, 2),  // optional
-              //   endDate: new Date(), // optional
-              // }}
               // onChange={} // same props as onConfirm but triggered without confirmed by user
-              // locale={'nl'} // optional
               saveLabel="Simpan" // optional
               label="Pilih Periode" // optional
               // startLabel="From" // optional
@@ -97,12 +175,45 @@ const Assessment = () => {
           </View>
           <Gap height={10} />
           <ScrollView showsVerticalScrollIndicator={false}>
-            <CardAssessment />
-            <CardAssessment />
-            <CardAssessment />
-            <CardAssessment />
+            <CardAssessment
+              defaultValue={
+                assessmentData?.count > 0 ? assessmentData[0]?.out_home : false
+              }
+              onSelect={(value: any) => setOutHome(value)}
+              question="Apakah pernah keluar rumah/ tempat umum (pasar, fasyankes, kerumunan orang, dan lain lain ) hari ini ?"
+            />
+            <CardAssessment
+              defaultValue={
+                assessmentData?.count > 0 ? assessmentData[0]?.fever : false
+              }
+              onSelect={(value: any) => setFever(value)}
+              question="Apakah anda merasakan demam/ batuk/pilek/ sakit tenggorokan/sesak hari ini?"
+            />
+            <CardAssessment
+              defaultValue={
+                assessmentData?.count > 0 ? assessmentData[0]?.pain : false
+              }
+              onSelect={(value: any) => setPain(value)}
+              question="Apakah anda melakukan kontak fisik dengan orang yang dinyatakan ODP,PDP atau konfirm COVID-19 hari ini?"
+            />
+            <CardAssessment
+              defaultValue={
+                assessmentData?.count > 0 ? assessmentData[0]?.breath : false
+              }
+              onSelect={(value: any) => setBreath(value)}
+              question="Apakah anda mengikuti kegiatan yang melibatkan banyak orang hari ini?"
+            />
+            <CardAssessment
+              defaultValue={
+                assessmentData?.count > 0
+                  ? assessmentData[0]?.physical_contact
+                  : false
+              }
+              onSelect={(value: any) => setPhysicalContact(value)}
+              question="Apakah anda merasakan kondisi yang semakin buruk hari ini?"
+            />
             <Gap height={10} />
-            <Button>Kirim</Button>
+            <Button onPress={_handleAssessmentDaily}>Kirim</Button>
             <Gap height={20} />
           </ScrollView>
         </View>

@@ -1,8 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { memo } from 'react';
-import { useState } from 'react';
-import { useCallback } from 'react';
-import { useEffect } from 'react';
+import React, { memo, useEffect, useState, useCallback } from 'react';
 import {
   Dimensions,
   ScrollView,
@@ -10,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  RefreshControl,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { RootStateOrAny, useSelector } from 'react-redux';
@@ -23,6 +21,7 @@ import {
   FONT_MEDIUM,
   FONT_REGULAR,
 } from '../../theme';
+import showMessage from '../../utils/showMessage';
 
 const Dashboard: React.FC<{ route: any; navigation: any }> = ({
   route,
@@ -33,13 +32,17 @@ const Dashboard: React.FC<{ route: any; navigation: any }> = ({
   );
 
   const [stats, setStats] = useState(vaccination?.stats);
+  const [refreshing, setRefreshing] = useState(false);
 
   const _handleGetVaccination = useCallback(async () => {
+    setRefreshing(true);
     await getVaccination();
+    setRefreshing(false);
+    showMessage("Data Diperbarui");
   }, [vaccination]);
 
   useEffect(() => {
-    _handleGetVaccination();
+    // _handleGetVaccination();
   }, []);
 
   useEffect(() => {
@@ -58,7 +61,15 @@ const Dashboard: React.FC<{ route: any; navigation: any }> = ({
         subTitle="COVID ELECTRONIC INFORMATION"
         style={styles.header}
       />
-      <ScrollView style={{ paddingHorizontal: 10 }}>
+      <ScrollView
+        style={{ paddingHorizontal: 10 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={_handleGetVaccination}
+          />
+        }
+      >
         <Gap height={20} />
         <Input
           placeholder="Masukkan lokasi anda"

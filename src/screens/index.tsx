@@ -5,6 +5,7 @@ import Search from './Search';
 import SelfAssessment from './SelfAssessment';
 import ResultAssessment from './ResultAssessment';
 import SignUp from './SignUp';
+import Consultation from './Consultation';
 export {
   Splash,
   Dashboard,
@@ -13,5 +14,6 @@ export {
   SelfAssessment,
   ResultAssessment,
   SignUp,
+  Consultation,
 };
 export * from './Main';

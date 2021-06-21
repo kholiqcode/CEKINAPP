@@ -13,6 +13,7 @@ import { ILLogo } from '../../../assets';
 import { Gap } from '../../../components';
 import { color, FONT_BOLD, FONT_LIGHT } from '../../../theme';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { useNavigation } from '@react-navigation/native';
 
 const Header: React.FC<{
   style?: ViewStyle;
@@ -21,8 +22,10 @@ const Header: React.FC<{
   profile?: any;
   logo?: any;
   back?: any;
+  message?: any;
   onPress?: any;
-}> = ({ style, title, subTitle, profile, logo, back, onPress }) => {
+}> = ({ style, title, subTitle, profile, logo, back, onPress, message }) => {
+  const navigation = useNavigation();
   return (
     <View style={{ ...styles.container, ...style }}>
       {back ? (
@@ -34,10 +37,19 @@ const Header: React.FC<{
       )}
 
       <Gap width={profile ? 15 : 20} />
-      <View>
+      <View style={{ flex: 1 }}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subTitle}>{subTitle}</Text>
       </View>
+      {message && (
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate('Consultation')}
+        >
+          <Icon name="comments" size={24} color={color.primary} />
+        </TouchableOpacity>
+      )}
+      <Gap width={profile ? 15 : 20} />
     </View>
   );
 };

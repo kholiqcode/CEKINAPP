@@ -15,6 +15,7 @@ import {
   SelfAssessment,
   ResultAssessment,
   SignUp,
+  Consultation,
 } from '../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabNavigator } from '../components';
@@ -28,6 +29,7 @@ export type ScreenParamList = {
   SelfAssessment: undefined;
   ResultAssessment: undefined;
   SignUp: undefined;
+  Consultation: undefined;
 };
 const Stack = createStackNavigator<ScreenParamList>();
 
@@ -71,7 +73,7 @@ const MainScreen = () => (
 );
 
 const Router = () => (
-  <Stack.Navigator initialRouteName="SignUp">
+  <Stack.Navigator initialRouteName="Splash">
     <Stack.Screen
       name="Splash"
       component={Splash}
@@ -84,6 +86,7 @@ const Router = () => (
       component={Dashboard}
       options={{
         headerShown: false,
+        cardStyleInterpolator: forFade,
       }}
     />
     <Stack.Screen
@@ -116,7 +119,8 @@ const Router = () => (
       component={SelfAssessment}
       options={{
         headerShown: false,
-        cardStyleInterpolator: forFade,
+        cardStyleInterpolator:
+          CardStyleInterpolators.forRevealFromBottomAndroid,
       }}
     />
     <Stack.Screen
@@ -133,6 +137,14 @@ const Router = () => (
       options={{
         headerShown: false,
         cardStyleInterpolator: forFade,
+      }}
+    />
+    <Stack.Screen
+      name="Consultation"
+      component={Consultation}
+      options={{
+        headerShown: false,
+        cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
       }}
     />
   </Stack.Navigator>

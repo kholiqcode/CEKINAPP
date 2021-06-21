@@ -8,19 +8,20 @@ import RadioForm, {
 } from 'react-native-simple-radio-button';
 import { useState } from 'react';
 
-const CardAssessment:React.FC<any> = ({question}) => {
-  const [value, setValue] = useState(0);
+const CardAssessment: React.FC<any> = ({
+  question,
+  onSelect,
+  defaultValue,
+}) => {
+  const [value, setValue] = useState(defaultValue);
   var radio_props = [
-    { label: 'Ya', value: 0 },
-    { label: 'Tidak', value: 1 },
+    { label: 'Tidak', value: 0 },
+    { label: 'Ya', value: 1 },
   ];
 
   return (
-    <View style={{ padding:5 }}>
-      <Text style={{ ...FONT_REGULAR(14), width: '90%' }}>
-        Apakah anda mengalami sesak nafas saat tidur dalam jangka waktu yang
-        cukup lama?
-      </Text>
+    <View style={{ padding: 5 }}>
+      <Text style={{ ...FONT_REGULAR(14), width: '90%' }}>{question}</Text>
       <RadioForm animation={true}>
         {radio_props.map((obj, i) => (
           <RadioButton labelHorizontal={true} key={i}>
@@ -28,7 +29,10 @@ const CardAssessment:React.FC<any> = ({question}) => {
               obj={obj}
               index={i}
               isSelected={value == i}
-              onPress={(thisValue: number) => setValue(thisValue)}
+              onPress={(thisValue: number) => {
+                setValue(thisValue);
+                onSelect(thisValue == 1 ? true : false);
+              }}
               borderWidth={2}
               buttonInnerColor={'#10536D'}
               buttonOuterColor={value === i ? '#10536D' : '#6F8B9A'}
@@ -41,7 +45,10 @@ const CardAssessment:React.FC<any> = ({question}) => {
               obj={obj}
               index={i}
               labelHorizontal={true}
-              onPress={(thisValue: number) => setValue(thisValue)}
+              onPress={(thisValue: number) => {
+                setValue(thisValue);
+                onSelect(thisValue == 1 ? true : false);
+              }}
               labelStyle={{
                 ...FONT_MEDIUM(14),
                 color: value === i ? '#10536D' : '#6F8B9A',

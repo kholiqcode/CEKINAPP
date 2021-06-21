@@ -1,16 +1,26 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { memo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { ILLogo } from '../../assets';
 import { BoxContainer, Gap, Header, Button } from '../../components';
+import { setAssessment, setVaccination } from '../../libs';
 import { color, FONT_MEDIUM, FONT_REGULAR } from '../../theme';
 
 const ResultAssessment: React.FC<any> = ({ navigation }) => {
   const { assessment } = useSelector(
     (state: RootStateOrAny) => state.assessmentReducer,
   );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(setAssessment(null));
+    };
+  }, []);
   return (
     <BoxContainer>
       <View style={{ flex: 1, paddingHorizontal: 10 }}>
@@ -40,7 +50,7 @@ const ResultAssessment: React.FC<any> = ({ navigation }) => {
             Score : {assessment?.score}
           </Text>
           <Text style={{ ...FONT_MEDIUM(16), textAlign: 'center' }}>
-            {assessment?.information?.id}
+            {assessment?.information?.id ?? assessment?.indicator}
           </Text>
           <Gap
             height={20}
@@ -103,9 +113,11 @@ const ResultAssessment: React.FC<any> = ({ navigation }) => {
           </View>
         </View>
         <Gap height={20} />
-        {assessment?.score > 5 ? (
+        {assessment?.score > 5 && assessment?.type === 'guest' ? (
           <View>
-            <Button onPress={() => navigation.navigate('SignIn')}>Isolasi Mandiri</Button>
+            <Button onPress={() => navigation.navigate('SignIn')}>
+              Isolasi Mandiri
+            </Button>
             <Gap height={10} />
             <Text style={{ ...FONT_REGULAR(12), color: 'red' }}>
               ** Masuk untuk melakukan melakukan karantina mandiri selama 14
@@ -113,7 +125,9 @@ const ResultAssessment: React.FC<any> = ({ navigation }) => {
             </Text>
           </View>
         ) : (
-          <Button>Beranda</Button>
+          <Button onPress={() => navigation.navigate('MainScreen')}>
+            Beranda
+          </Button>
         )}
       </ScrollView>
     </BoxContainer>

@@ -11,9 +11,14 @@ const API: API = {};
 API.base = {
   getVaccination: ApiRequest.get(baseUrl?.vaccination),
   getHospitals: ApiRequest.get(baseUrl?.hospitals),
+  getDoctors: ApiRequest.get(baseUrl?.doctors),
   postAssessment: ApiRequest.post(baseUrl?.assessment),
+  postAssessmentDaily: ApiRequest.post(baseUrl?.assessmentDaily),
+  getAssessmentData: ApiRequest.get(baseUrl?.assessmentData),
   postRegister: ApiRequest.post(baseUrl?.auth?.register),
   postLogin: ApiRequest.post(baseUrl?.auth?.login),
+  getUserInfo: ApiRequest.get(baseUrl?.userInfo),
+  getIsolationInfo: ApiRequest.get(baseUrl?.isolationInfo),
 };
 
 export { API, constant, url };

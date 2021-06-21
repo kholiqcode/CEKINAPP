@@ -42,7 +42,7 @@ const CardHospital: React.FC<any> = ({ item }) => {
           <View style={{ flexDirection: 'row' }}>
             <Icon name="bed" size={14} color={color.primary} />
             <Gap width={10} />
-            <Text style={{ ...FONT_REGULAR(12) }}>Kamar tersedia : 10</Text>
+            <Text style={{ ...FONT_REGULAR(12) }}>Kamar tersedia : {item?.bed ?? 0}</Text>
           </View>
         </View>
         <View style={{ flex: 1 }}>

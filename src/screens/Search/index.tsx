@@ -11,18 +11,20 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { BoxContainer, Gap, Input } from '../../components';
 import { color, FONT_BOLD, FONT_MEDIUM } from '../../theme';
 
-const Search = () => {
+const Search: React.FC<any> = ({ route }) => {
   const [input, setInput] = useState('');
   const [refresh, setRefresh] = useState(false);
   const { vaccination } = useSelector(
     (state: RootStateOrAny) => state.vaccinationReducer,
   );
   const [regions, setRegions] = useState(vaccination?.stats?.regions);
-  const _handleSearch = (value:any) => {
-    setRegions(vaccination?.stats?.regions.filter((item:any) => {
+  const _handleSearch = (value: any) => {
+    setRegions(
+      vaccination?.stats?.regions.filter((item: any) => {
         return item?.name.toLowerCase().includes(value.toLowerCase());
-    }));
-  }
+      }),
+    );
+  };
   const navigation = useNavigation();
   return (
     <BoxContainer>
@@ -52,7 +54,14 @@ const Search = () => {
                   borderBottomColor: '#EEEE',
                   borderBottomWidth: 1,
                 }}
-                onPress={() => navigation.navigate('Dashboard', item)}
+                onPress={() => {
+                  route?.params?.type === 'auth'
+                    ? navigation.navigate('MainScreen', {
+                        params: item,
+                        screen: 'Home',
+                      })
+                    : navigation.navigate('Dashboard', item);
+                }}
               >
                 <Text style={{ ...FONT_MEDIUM(16), color: color.primary }}>
                   {item?.name}

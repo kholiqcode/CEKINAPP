@@ -3,7 +3,7 @@ const activeConfig = 'dev';
 const constants = {
   dev: {
     url: {
-      api: 'http://192.168.0.10:8000/api',
+      api: 'http://cekin.stack.co.id/api',
       assets: '',
       origin: '',
     },
